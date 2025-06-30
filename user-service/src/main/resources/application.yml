@@ -37,4 +37,4 @@ eureka:
     register-with-eureka: true
 
 greeting:
-  message: Welcome to the Simple E-commerce.
+  message: Welcome to the Simple E-commerce - 2nd.
