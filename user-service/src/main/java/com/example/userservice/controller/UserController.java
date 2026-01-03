@@ -7,6 +7,7 @@ import com.example.userservice.vo.Greeting;
 import com.example.userservice.vo.RequestUser;
 import com.example.userservice.vo.ResponseUser;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-service")
+@RequestMapping("/")
 @Slf4j
 public class UserController {
     private Environment env;
@@ -36,7 +37,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/health-check") // http://localhost:60000/health-check
+    @GetMapping("/health-check")
     public String status() {
         return String.format("It's Working in User Service"
                 + ", port(local.server.port)=" + env.getProperty("local.server.port")
@@ -69,19 +70,6 @@ public class UserController {
     public ResponseEntity getUsers() {
         Iterable<UserEntity> userList = userService.getUserByAll();
 
-        List<ResponseUser> result = new ArrayList<>();
-        userList.forEach(v -> {
-            result.add(new ModelMapper().map(v, ResponseUser.class));
-        });
-
-        return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
-
-    @GetMapping("/users/{userId}")
-    public ResponseEntity getUser(@PathVariable("userId") String userId) {
-        UserDto userDto = userService.getUserByUserId(userId);
-        ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
-
-        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+        return ResponseEntity.status(HttpStatus.OK).body(userList);
     }
 }
