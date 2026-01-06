@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+//@RequestMapping("/user-service")
 @RequestMapping("/")
 @Slf4j
 public class UserController {
@@ -36,7 +37,7 @@ public class UserController {
         this.greeting = greeting;
         this.userService = userService;
     }
-
+    // http://localhost:8000/user-service/health-check --> http://localhost:60000/health-check
     @GetMapping("/health-check")
     public String status() {
         return String.format("It's Working in User Service"
@@ -70,6 +71,19 @@ public class UserController {
     public ResponseEntity getUsers() {
         Iterable<UserEntity> userList = userService.getUserByAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(userList);
+        List<ResponseUser> result = new ArrayList<>();
+        userList.forEach(v -> {
+            result.add(new ModelMapper().map(v, ResponseUser.class));
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity getUser(@PathVariable("userId") String userId) {
+        UserDto userDto = userService.getUserByUserId(userId);
+        ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 }

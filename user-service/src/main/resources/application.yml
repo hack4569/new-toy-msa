@@ -21,7 +21,7 @@ spring:
   security:
     user:
       name: user
-      password: $2a$10$Weo1HBUQcCPfJJ.ijKlX1Oj9m6zbxzMr3rxODBXI0l9bH.Kdforqe
+      password: $2a$10$g70rRcQBR7Jnm9A9m/Nqje8lCIPeADz2.VBMxhPyzUBoJc28pvC9.
 
 logging:
   level:
@@ -37,4 +37,8 @@ eureka:
     register-with-eureka: true
 
 greeting:
-  message: Welcome to the Simple E-commerce - 2nd.
+  message: Welcome to the Simple E-commerce.
+
+token:
+  secret: my-very-long-secret-key-1234567890123456
+  expiration-time: 86400000 # 10 days
