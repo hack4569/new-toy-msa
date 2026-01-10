@@ -21,3 +21,9 @@
   * Section 7)
     * ch07-1: user-service (login 처리)
     * ch07-2: apigateway-service (routing 처리)
+  * Section 8)
+    * ch08-1: local git repository
+    * ch08-2: user-service 수정 + spring boot actuator
+    * ch08-3: apigateway-service 수정
+    * ch08-4: profiles 
+    * ch08-5: remote git repository
